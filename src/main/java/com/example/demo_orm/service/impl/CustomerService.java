@@ -15,4 +15,14 @@ public class CustomerService implements ICRUDService {
     public List<Customer> findAll() {
         return customerHibernate.findAll();
     }
+
+    @Override
+    public Customer findById(int id) {
+        return customerHibernate.findById(id);
+    }
+
+    @Override
+    public void save(Customer customer) {
+        customerHibernate.create(customer);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -30,6 +31,8 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
+@EnableJpaRepositories("com.example.demo_orm.repository")
+//cho phép transaction manager hoạt động để kiểm soát thao tác với DB
 @EnableTransactionManagement
 @ComponentScan("com.example.demo_orm")
 public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAware {
@@ -82,7 +85,8 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        //đổi từ MySQL5Dialect => MySQL5InnoDBDialect: để tạo khóa ngoại có liên kết trong MySQL
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         return properties;
     }
 
@@ -92,7 +96,6 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
         return entityManagerFactory.createEntityManager();
     }
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -103,7 +106,6 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         entityManagerFactoryBean.setJpaProperties(additionalProperties());
         return entityManagerFactoryBean;
     }
-
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

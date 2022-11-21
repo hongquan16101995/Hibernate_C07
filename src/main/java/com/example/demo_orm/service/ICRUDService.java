@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ICRUDService {
     List<Customer> findAll();
+
+    Customer findById(int id);
+
+    void save(Customer customer);
 }

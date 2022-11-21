@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="${customer.getId()}"></h1>
+<h1 th:text="${customer.getName()}"></h1>
+<h1 th:text="${customer.getAge()}"></h1>
+<h1 th:text="${customer.getAddress()}"></h1>
+<a th:href="@{/}">Back to home</a>
+</body>
+</html>

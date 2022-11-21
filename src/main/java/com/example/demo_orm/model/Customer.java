@@ -1,19 +1,18 @@
 package com.example.demo_orm.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 //annotation Entity: dùng để đánh dấu thực thể trong dự án spring
 //hỗ trợ tạo bảng DB bằng ORM
 @Entity
+//annotation hỗ trợ đặt tên bảng trong DB
+@Table(name = "customers")
 public class Customer {
     //annotation Id: tạo khóa chính
     @Id
     //id tự động chạy
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
     private int age;
@@ -22,11 +21,11 @@ public class Customer {
     public Customer() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
